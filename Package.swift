@@ -3,14 +3,14 @@
 import PackageDescription
 
 let package = Package(
-    name: "CohesionWebUISwift",
+    name: "CohesionWebKit",
     platforms: [.macOS("27.0"), .iOS("27.0")],
     products: [
-        .library(name: "CohesionWebUISwift", targets: ["CohesionWebUISwift"]),
+        .library(name: "CohesionWebKit", targets: ["CohesionWebKit"]),
     ],
     targets: [
         .target(
-            name: "CohesionWebUISwift",
+            name: "CohesionWebKit",
             swiftSettings: [
                 // As the apps build: main actor by default, approachable concurrency.
                 .defaultIsolation(MainActor.self),
