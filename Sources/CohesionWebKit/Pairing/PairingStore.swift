@@ -41,6 +41,13 @@ public final class PairingStore {
         remote = pairing
     }
 
+    /// Forgets the pairing with the server elsewhere, and the key it trusts,
+    /// so the app has to pair again.
+    public func unpair() {
+        Self.remoteItem.remove()
+        remote = nil
+    }
+
     #if os(macOS)
     /// This app's key on the Mac's own cohesiond, made the first time it is
     /// asked for and kept, so the app stays one client there.
