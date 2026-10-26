@@ -1,17 +1,17 @@
 import Foundation
 
 /// What a setup code tells a new client: `base64("<key>|<address>|<fingerprint>")`.
-/// The address is an ip, which means cohesiond's default port, or `ip:port`
-/// (`[v6]:port` for IPv6).
+/// The address is an ip or a DNS name, which means cohesiond's default port,
+/// or `host:port` (`[v6]:port` for IPv6).
 nonisolated struct SetupCode: Sendable {
     /// The port cohesiond listens on unless the setup code's address names another.
     static let defaultPort = 3000
 
     /// The secret cohesiond expects on `/register`.
     let key: String
-    /// The address cohesiond can be reached at.
+    /// The ip or DNS name cohesiond can be reached at.
     let host: String
-    /// The HTTPS port cohesiond listens on.
+    /// The HTTPS port clients connect to.
     let port: Int
     /// SHA-256 of cohesiond's public key, which its certificate must match.
     let fingerprint: String
@@ -30,7 +30,7 @@ nonisolated struct SetupCode: Sendable {
         fingerprint = String(parts[2])
     }
 
-    /// Splits `ip`, `ip:port` or `[v6]:port`; a bare IPv6 address has several colons and no port.
+    /// Splits `host`, `host:port` or `[v6]:port`; a bare IPv6 address has several colons and no port.
     private static func address(_ text: String) throws(PairingError) -> (host: String, port: Int) {
         let host: Substring
         let portText: Substring
