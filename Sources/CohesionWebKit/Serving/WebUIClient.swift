@@ -2,7 +2,7 @@ import Foundation
 import Observation
 
 /// Loads the web UI from a daemon and holds the session showing it.
-/// `CohesionWebUI` drives it from a route; an app only keeps one alive.
+/// `CohesionWebUI` drives it from a route; an app keeps one for each window.
 @Observable
 public final class WebUIClient {
     /// Where the web UI stands.
