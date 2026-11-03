@@ -103,7 +103,8 @@ public struct WebUIView: View {
                     topInset: max(proxy.safeAreaInsets.top, proxy.containerCornerInsets.topLeading.height)
                 )
             } action: { layout in
-                if let size, size != layout.size { isResizing = true }
+                // Width only: the keyboard changes the height and is no reason to blur.
+                if let size, size.width != layout.size.width { isResizing = true }
                 size = layout.size
                 topInset = layout.topInset
             }
