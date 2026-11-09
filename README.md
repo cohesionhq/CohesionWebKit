@@ -35,3 +35,11 @@ server at all:
 The package exports ready-made views: `PairingForm` and `PairingView` for
 pairing, `WebUIView` for a loaded UI, and `CohesionWebUI`, which shows
 whichever of those a route calls for.
+
+The script `SocketBridge` runs in the page is copied in
+[cohesionhq/webshell](https://github.com/cohesionhq/webshell) as
+`gtk/src/bridge.js`, for the Linux app. A change to one belongs in the other.
+
+## Licence
+
+MIT. See [LICENSE](LICENSE).
