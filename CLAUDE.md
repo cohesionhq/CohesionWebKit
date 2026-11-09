@@ -2,10 +2,10 @@
 
 CohesionWebKit: the Swift package the Cohesion Mac and iPad apps use to pair
 with `cohesiond`, connect to it, and show its web UI. `README.md` describes
-how it serves the UI. Its consumers are
-[cohesion-mac](https://github.com/cohesionhq/cohesion-mac) and
-[cohesion-ipad](https://github.com/cohesionhq/cohesion-ipad), which use it as
-a local package from a sibling checkout; the daemon and web UI live in
+how it serves the UI. Its consumers are the Mac and iPad app in
+[cohesionhq/webshell](https://github.com/cohesionhq/webshell) (`mac/`) and
+the Cohesion menu bar app (`cohesiond-macos`), which use it as a local
+package from a sibling checkout; the daemon and web UI live in
 [cohesionhq/cohesion](https://github.com/cohesionhq/cohesion).
 
 ## The page's side is a stable API
