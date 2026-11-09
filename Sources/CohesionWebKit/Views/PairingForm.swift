@@ -1,7 +1,7 @@
 import SwiftUI
 
 /// Registers this app with a server elsewhere using the setup code it
-/// printed, under a name that starts as the device's.
+/// printed, under a name that starts as the device's and the app's.
 public struct PairingForm: View {
     let store: PairingStore
     let onPair: () -> Void

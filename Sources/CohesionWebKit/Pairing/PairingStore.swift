@@ -22,14 +22,23 @@ public final class PairingStore {
         remote = Self.remoteItem.load()
     }
 
-    /// The name pairing suggests: the computer's name, as the Sharing
-    /// settings show it ("Mac mini"), or the device's.
+    /// The computer's name, as the Sharing settings show it ("Mac mini"), or
+    /// the device's: the first part of the name pairing suggests.
     public static var deviceName: String {
         #if os(macOS)
         SCDynamicStoreCopyComputerName(nil, nil) as String? ?? ProcessInfo.processInfo.hostName
         #else
         UIDevice.current.name
         #endif
+    }
+
+    /// The name a new client is offered: the device's name and the app's,
+    /// as `generatedClientName(device:client:)` formats them, as
+    /// `Mac mini (Cohesion)`.
+    static var generatedName: String {
+        let info = Bundle.main.infoDictionary
+        let app = info?["CFBundleDisplayName"] as? String ?? info?["CFBundleName"] as? String
+        return generatedClientName(device: deviceName, client: app ?? "Cohesion")
     }
 
     /// Registers as `name` with the server that printed `setupCode`,
@@ -53,7 +62,7 @@ public final class PairingStore {
     /// asked for and kept, so the app stays one client there.
     public var localIdentity: LocalIdentity {
         if let identity = Self.localItem.load() { return identity }
-        let identity = LocalIdentity(name: Self.deviceName)
+        let identity = LocalIdentity(name: Self.generatedName)
         Self.localItem.save(identity)
         return identity
     }

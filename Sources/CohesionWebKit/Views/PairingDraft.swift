@@ -5,7 +5,7 @@ import Observation
 /// starts, shared by the Mac's form and the iPad's sheet.
 @Observable
 final class PairingDraft {
-    var name = PairingStore.deviceName
+    var name = PairingStore.generatedName
     var setupCode = ""
     private(set) var isPairing = false
     private(set) var error: String?
