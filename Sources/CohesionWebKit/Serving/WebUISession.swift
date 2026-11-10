@@ -8,6 +8,7 @@ import UIKit
 
 /// One loaded web UI: the page showing it, served from `assets` by a scheme
 /// handler, and talking to the daemon at `route` through a `SocketBridge`.
+/// Its notifications are the system's, through a `NotificationBridge`.
 /// The page reads the token it presents from the URL it is first opened
 /// at, so it is opened with a fresh one each session.
 public final class WebUISession {
@@ -19,6 +20,7 @@ public final class WebUISession {
     init(route: DaemonRoute, assets: WebAssets) {
         let token = Self.freshToken()
         let bridge = SocketBridge(route: route, token: token)
+        let notifications = NotificationBridge()
         var configuration = WebPage.Configuration()
         configuration.urlSchemeHandlers[URLScheme(WebUISchemeHandler.scheme)!] = WebUISchemeHandler(
             assets: assets,
@@ -30,6 +32,10 @@ public final class WebUISession {
         )
         configuration.userContentController.add(bridge, contentWorld: .page, name: SocketBridge.handlerName)
         configuration.userContentController.addUserScript(
+            WKUserScript(source: NotificationBridge.script, injectionTime: .atDocumentStart, forMainFrameOnly: true)
+        )
+        configuration.userContentController.add(notifications, contentWorld: .page, name: NotificationBridge.handlerName)
+        configuration.userContentController.addUserScript(
             WKUserScript(source: Self.openInPlace, injectionTime: .atDocumentStart, forMainFrameOnly: true)
         )
         #if os(macOS)
@@ -38,6 +44,7 @@ public final class WebUISession {
         page = WebPage(configuration: configuration, navigationDecider: OwnOriginOnly())
         #endif
         bridge.page = page
+        notifications.page = page
         #if DEBUG
         page.isInspectable = true
         #endif

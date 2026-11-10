@@ -28,6 +28,10 @@ server at all:
   it replaces `WebSocket` for that one URL with a stand-in that posts to a
   script message handler (`SocketBridge`), which opens a session for each
   socket and relays text frames both ways, as `cohesion open` relays them.
+- **Notifications** are the system's: a script the web view runs before the
+  page sets `window.cohesionNotify` to post them to `NotificationBridge`,
+  which shows them as local notifications once allowed, and calls the
+  page's `window.cohesionOpen` with a clicked one's `href`.
 - **The token** is fresh for each load, handed over as `#token=` in the URL
   the page is opened at, and checked on `/client` and `/connect` as the
   proxy checks it.
